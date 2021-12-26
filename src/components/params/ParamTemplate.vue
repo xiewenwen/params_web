@@ -30,60 +30,27 @@
           <template slot="label"> 参数名 </template>
           {{ i }}
         </el-descriptions-item>
-        <!-- <el-descriptions-item>
-      <template slot="label">
-       
-        操作
-      </template>
-      <a>解构</a>
-    </el-descriptions-item> -->
         <el-descriptions-item>
           <template slot="label"> 参数值 </template>
           {{ param }}
         </el-descriptions-item>
       </el-descriptions>
-
-      <!-- <el-collapse style="width:500px" v-show="typeof(param)==='object'" v-model="activeNames" @change="handleChange">
-    
-  <el-collapse-item v-for="(p,i) in param" :key="i" :title="i+''" :name="i">
-    <div>{{p}}</div>
-   
-  </el-collapse-item>
-</el-collapse> -->
-      <!-- <ParamDetailEdit :paramValue="param" :paramName="i"></ParamDetailEdit> -->
     </div>
-    <!-- <el-form
-      :model="noramlData"
-      ref="noramlData"
-      label-width="100px"
-      class="demo-ruleForm"
-      style="width: 500px"
-      size="mini"
-    >
-      <div class="paramStyle" v-for="(param, i) in noramlData.params" :index="param" :key="i">
-        
-         <div><span>{{i}}:</span>{{param}} <el-link type="primary" style="width:75px;height:14px">主要链接</el-link></div>
 
-      </div>
-  </el-form> -->
-    <!-- <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >生成</el-button
-        >
-       
-      </el-form-item> -->
+    <div v-for="(value, key) in pros" :key="key">
+      <ParamDetailEdit :paramValue="value" :paramName="key"></ParamDetailEdit>
+    </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 // import qs from "qs";
-// import ParamDetailEdit from './ParamDetailEdit.vue'
+import ParamDetailEdit from "./ParamDetailEdit.vue";
 
 export default {
   name: "ParamTemplate",
   components: {
-    // ParamDetailEdit
+    ParamDetailEdit,
   },
   data() {
     return {
@@ -102,6 +69,7 @@ export default {
         only: true,
       },
       activeNames: ["1"],
+      pros: [],
     };
   },
   methods: {
@@ -113,7 +81,15 @@ export default {
         })
         .then(
           (response) => {
-            console.log(response.data);
+            console.log("具体的参数" + response.data);
+            let getdata = response.data;
+            for (let value in getdata) {
+              console.log(value);
+              console.log(getdata[value]);
+              //获得参数数组
+              this.pros.unshift(getdata[value]);
+            }
+            console.log(this.pros);
           },
           (error) => {
             console.log(error);

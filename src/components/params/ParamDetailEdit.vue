@@ -38,6 +38,8 @@ export default {
         resource: "",
         desc: "",
       },
+      se:{},
+      myArr:[23,343,565]
     };
   },
   methods: {
@@ -50,6 +52,15 @@ export default {
     // this.sizeForm.value=this.paramValue;
     console.log("data is" + this.paramValue.propName);
     console.log(this.paramName);
+    let mySet=new Set(this.myArr);
+    se=new Set();
+    se.add("mytet");
+    mySet.add(67);
+    mySet.add("test");
+    console.log(se.size);
+    console.log(mySet.size);
+    // 用...(展开操作符)操作符将Set转换为Array
+    console.log([...mySet]);
   },
 };
 </script>
